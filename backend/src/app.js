@@ -2,13 +2,17 @@ import express from "express";
 const app = express();
 const port = 3000;
 
+app.use(express.json()); // para que sirve las lineas 5 y 6
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/:name/:id", (req, res) => {
-  const {name, id} = req.params
+  const { name, id } = req.params;
   res.send(`Peticion get ${name}: ${id}`);
 });
 
 app.post("/", (req, res) => {
-  res.send("peticion post");
+  const { email, password } = req.body;
+  res.send(`${email} ${password}`);
 });
 
 app.put("/", (req, res) => {
