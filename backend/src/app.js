@@ -1,4 +1,5 @@
 import express from "express";
+import mysql2 from "mysql2";
 const app = express();
 const port = 3000;
 
@@ -22,6 +23,20 @@ app.put("/", (req, res) => {
 app.delete("/", (req, res) => {
   res.send("peticion delete");
 });
+
+// database
+
+const connection = mysql2.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "12345678",
+  database: "tutorial",
+});
+
+connection.connect((err)=>{
+  if(err) throw err;
+  console.log("base de datos conectada")
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port port!`);
