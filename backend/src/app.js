@@ -1,42 +1,17 @@
-import express from "express";
-import mysql2 from "mysql2";
-const app = express();
-const port = 3000;
+const execQuery = (querysql) => {
+  connection.query(querysql, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+  });
+};
 
-app.use(express.json()); // para que sirve las lineas 5 y 6
-app.use(express.urlencoded({ extended: true }));
+const showQuery = "show tables;";
 
-app.get("/:name/:id", (req, res) => {
-  const { name, id } = req.params;
-  res.send(`Peticion get ${name}: ${id}`);
-});
+const insertQuery = `INSERT INTO User(first_name, age) VALUES('Juan', 30);`;
 
-app.post("/", (req, res) => {
-  const { email, password } = req.body;
-  res.send(`${email} ${password}`);
-});
+const getQuery = `SELECT * FROM User;`;
 
-app.put("/", (req, res) => {
-  res.send("peticion put");
-});
-
-app.delete("/", (req, res) => {
-  res.send("peticion delete");
-});
-
-// database
-
-const connection = mysql2.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "12345678",
-  database: "tutorial",
-});
-
-connection.connect((err)=>{
-  if(err) throw err;
-  console.log("base de datos conectada")
-})
+execQuery(getQuery);
 
 app.listen(port, () => {
   console.log(`Example app listening on port port!`);
